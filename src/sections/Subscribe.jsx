@@ -1,8 +1,28 @@
 import Button from "../components/Button";
+import { motion } from "framer-motion";
+
+const cardVariants = {
+  offscreen: {
+    y: 300,
+  },
+  onscreen: {
+    y: 50,
+    // rotate: -10,
+    transition: {
+      type: "spring",
+      bounce: 0.4,
+      duration: 0.8,
+    },
+  },
+};
 
 const Subscribe = () => {
   return (
-    <section
+    <motion.section
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ once: true, }}
+      variants={cardVariants}
       className="max-container flex justify-between items-center max-lg:flex-col gap-10"
       id="contact-us"
     >
@@ -13,10 +33,10 @@ const Subscribe = () => {
       <div className="lg:max-w-[40%] w-full flex items-center max-sm:flex-col gap-5 p-2.5 sm:border sm:border-slate-gray rounded-full">
         <input type="text" placeholder="subscribe@nike.com" className="input" />
         <div className="flex max-sm:justify-end items-center max-sm:w-full">
-          <Button label="Sign Up" fullWidth/>
+          <Button label="Sign Up" fullWidth />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

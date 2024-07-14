@@ -2,11 +2,22 @@ import React, { useState } from "react";
 import { headerLogo } from "../assets/images";
 import { hamburger } from "../assets/icons";
 import { navLinks } from "../constants";
+import { motion } from "framer-motion";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const variants = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: "-100%" },
+  };
+
   return (
-    <header className={`${isOpen?'fixed bg-white':'absolute'} w-full top-0 left-0 z-50`}>
+    <header
+      className={`${
+        isOpen ? "fixed bg-white" : "absolute"
+      } w-full top-0 left-0 z-50`}
+    >
       <header className="padding-x py-8 w-full">
         <nav className="flex justify-between items-center max-container">
           <a href="/">
@@ -26,17 +37,30 @@ const Nav = () => {
               );
             })}
           </ul>
-          <div className="hidden max-lg:block" onClick={()=>setIsOpen((prev)=>prev=!prev)}>
+          <div
+            className="hidden max-lg:block"
+            onClick={() => setIsOpen((prev) => (prev = !prev))}
+          >
             <img src={hamburger} alt="hamburger" width={25} height={25} />
           </div>
         </nav>
       </header>
-      <ul className={`hidden max-lg:flex bg-white w-full h-lvh flex-col items-center gap-5 pt-[300px] transition-transform ${isOpen?'translate-x-0':'translate-x-[-100%]'}`}>
+      <motion.ul
+        animate={isOpen ? "open" : "closed"}
+        variants={variants}
+        className={`hidden max-lg:flex bg-white w-full h-lvh flex-col items-center gap-5 pt-[150px] `}
+      >
+        {/* transition-transform ${
+          isOpen ? "translate-x-0" : "translate-x-[-100%]"
+        } */}
         {navLinks.map((navLink) => {
           return (
-            <li key={navLink.label} className="bg-coral-red px-3 py-1 rounded-full">
+            <li
+              key={navLink.label}
+              className="bg-coral-red px-3 py-1 rounded-full"
+            >
               <a
-                onClick={()=>setIsOpen(false)}
+                onClick={() => setIsOpen(false)}
                 href={navLink.href}
                 className="font-montserrat leading-normal text-lg text-white font-semibold"
               >
@@ -45,7 +69,7 @@ const Nav = () => {
             </li>
           );
         })}
-      </ul>
+      </motion.ul>
     </header>
   );
 };
